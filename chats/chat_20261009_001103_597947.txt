@@ -1,0 +1,27 @@
+TITLE: helo
+TITLE_CUSTOM: 0
+CREATED: 2026-10-09T00:19:35.060134
+UPDATED: 2026-10-09T01:22:20.624837
+
+[USER]
+helo
+
+[ASSISTANT]
+hello world
+
+[USER]
+sup
+
+[ASSISTANT]
+hello world
+
+[USER]
+wefwefw
+
+[ASSISTANT]
+hello world
+
+[USER]
+asdas
+
+[ASSISTANT]
