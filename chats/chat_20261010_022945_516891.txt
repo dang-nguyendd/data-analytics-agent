@@ -1,0 +1,17 @@
+TITLE: asdasd
+TITLE_CUSTOM: 0
+CREATED: 2026-10-10T02:29:45.516891
+UPDATED: 2026-10-10T02:33:19.441926
+
+[USER]
+asdasd
+
+[ASSISTANT]
+{"type": "text", "content": "hello world"}
+
+[USER]
+sds
+
+[ASSISTANT]
+{"type": "text", "content": "hello world"}
+

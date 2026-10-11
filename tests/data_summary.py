@@ -1,8 +1,13 @@
-from cmds.data_summary import data_summary
+from services.data_summary import data_summary
+from pathlib import Path
+import pandas as pd
 
 
-result = data_summary(
-    r".data/hotel_bookings.csv"
-)
+path = Path(".data/hotel_bookings.csv")
 
+df = pd.read_csv(path)
+
+result = data_summary(df)
+
+print("SUMMARY: ")
 print(result)

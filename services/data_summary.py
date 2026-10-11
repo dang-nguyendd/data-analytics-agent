@@ -1,78 +1,43 @@
-from pathlib import Path
-
 import pandas as pd
-
 
 # ==========================================================
 # Data Summary
 # ==========================================================
 
-def data_summary(data_file_dir):
+def data_summary(df):
     """
-    Summarize a CSV or Parquet data file.
+    Summarize a data file.
 
     Parameters
     ----------
-    data_file_dir : str or Path
-        Path to the CSV or Parquet file.
+    df: DataFrame object
 
     Returns
     -------
     dict
         Dictionary containing:
-        - file information
         - column headers
         - data types
         - first 3 rows
+        - row and column counts
     """
 
     # ------------------------------------------------------
-    # Validate path
+    # Validate input
     # ------------------------------------------------------
-
-    path = Path(data_file_dir)
-
-    if not path.exists():
-        raise FileNotFoundError(
-            f"Data file not found: {path}"
-        )
-
-    if not path.is_file():
-        raise ValueError(
-            f"Path is not a file: {path}"
-        )
-
-    # ------------------------------------------------------
-    # Read data
-    # ------------------------------------------------------
-
-    suffix = path.suffix.lower()
-
-    if suffix == ".csv":
-
-        df = pd.read_csv(path)
-
-    elif suffix == ".parquet":
-
-        df = pd.read_parquet(path)
-
-    else:
-
-        raise ValueError(
-            "Unsupported file type. "
-            "Only CSV and Parquet files are supported."
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(
+            "df must be a pandas DataFrame."
         )
 
     # ------------------------------------------------------
     # Headers
     # ------------------------------------------------------
-
     headers = list(df.columns)
 
     # ------------------------------------------------------
     # Data types
     # ------------------------------------------------------
-
     dtypes = {
         column: str(dtype)
         for column, dtype in df.dtypes.items()
@@ -81,7 +46,6 @@ def data_summary(data_file_dir):
     # ------------------------------------------------------
     # First 3 rows
     # ------------------------------------------------------
-
     first_3_rows = (
         df.head(3)
         .to_dict(orient="records")
@@ -90,11 +54,8 @@ def data_summary(data_file_dir):
     # ------------------------------------------------------
     # Return result
     # ------------------------------------------------------
-
     return {
-        "file": str(path),
-        "filename": path.name,
-        "format": suffix.replace(".", ""),
+        "shape": {"rows": df.shape[0], "columns": df.shape[1]},
         "columns": headers,
         "dtypes": dtypes,
         "first_3_rows": first_3_rows,

@@ -1,11 +1,21 @@
 import sys
-import getpass
 import ctypes
+import pwinput
+import os
 
 from PySide6.QtWidgets import QApplication
-
+from PySide6.QtGui import QIcon 
 from services.authentication import authenticate
+
 from ui.main_window import MainWindow
+
+# (Keep your resource_path function here if you used it earlier)
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 
 def close_console():
@@ -27,15 +37,15 @@ def close_console():
 
 
 def login():
-
     print()
     print("========================================")
-    print("        My Application Login")
+    print("        Welcome slave! Once you enter this path, there is no turning back!")
     print("========================================")
     print()
 
     username = input("Username: ")
-    password = getpass.getpass("Password: ")
+    # mask="*" tells it to show asterisks instead of hiding input
+    password = pwinput.pwinput(prompt="Password: ", mask="*")
 
     if authenticate(username, password):
         return True
@@ -43,7 +53,6 @@ def login():
     print()
     print("Authentication failed.")
     return False
-
 
 def main():
 
@@ -67,11 +76,13 @@ def main():
 
     app = QApplication(sys.argv)
 
+    icon_path = resource_path("app-icon.ico")
+    app.setWindowIcon(QIcon(icon_path))
+
     window = MainWindow()
     window.show()
 
     sys.exit(app.exec())
-
 
 if __name__ == "__main__":
     main()
